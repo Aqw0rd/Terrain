@@ -7,7 +7,7 @@ var saved = false;
 var terrain = [];
 
 function preload() {
-  tiles = new Terrain(100);
+  tiles = new Terrain(30);
   
   grass = loadImage("pic/0.png");
 
@@ -56,7 +56,7 @@ function updateTiles(){
   for(var i in tiles){
     for(var j in tiles){
       var sum = tiles[i][j].up + tiles[i][j].down + tiles[i][j].left + tiles[i][j].right;
-
+      
       if(tiles[i][j].type===1)
         image(grass,j*16,i*16);
         
@@ -69,39 +69,16 @@ function updateTiles(){
         
       var sum2 = tiles[i][j].wall + tiles[i][j].lCorner + tiles[i][j].rCorner + tiles[i][j].lEdge + tiles[i][j].rEdge + tiles[i][j].end;
       sum2 = sum2.toString();
-      for(var a = sum2.length-1; a > 0; a--){
-        var bin = parseInt(sum2[a])
+      //Loading of Elevation images
+      //TODO : Use better tiles
+      for(var a = sum2.length-1; a >= 0; a--){
+        var bin = parseInt(sum2[sum2.length-1-a])
         bin =  bin * Math.pow(10,a);
         bin = bin.toString() + "EL";;
-        if(sum2[a] !== "0"){
+        if(sum2[sum2.length-1-a] !== "0"){
           image(img[bin].el,j*16,i*16);
         }
       }
-
-      /**
-       * Not to self:
-       * I elevation så kan ikke en blokk være
-       * i mer enn én "tilstand". Fiks det
-       */
-      /*if(tiles[i][j].wall)
-        image(img["3"].el,j*16,i*16);
-
-      if(tiles[i][j].lCorner)
-        image(img["6"].el,(j-1)*16,i*16);
-
-      if(tiles[i][j].rCorner)
-        image(img["12"].el,(j+1)*16,i*16);
-        
-      else if(tiles[i][j].lEdge)
-        image(img["9"].el,(j-1)*16,i*16);
-
-      else if(tiles[i][j].rEdge){
-        image(img["15"].el,(j+1)*16,i*16);
-        
-      }
-      else if(tiles[i][j].end)
-        image(img["18"].el,j*16,i*16);*/
-      
     }
   }
 }

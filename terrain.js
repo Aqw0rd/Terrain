@@ -42,7 +42,7 @@ function Terrain(chunk){
           rCorner:    this.y !== this.chunk-1         &&  (this.elevation[this.x][this.y] > this.elevation[this.x][this.y+1]) && this.terrain[this.x][this.y].wall,
           lEdge:      this.y !== 0                    &&  (this.elevation[this.x][this.y] > this.elevation[this.x][this.y-1]) && !(this.terrain[this.x][this.y].wall),
           rEdge:      this.y !== this.chunk-1         &&  (this.elevation[this.x][this.y] > this.elevation[this.x][this.y+1]) && !(this.terrain[this.x][this.y].wall),
-          end:        this.x !== 0                    &&  (this.elevation[this.x][this.y] > this.elevation[this.x-1][this.y]) && !(this.terrain[this.x][this.y].wall)              
+          end:        this.x !== 0                    &&  (this.elevation[this.x][this.y] > this.elevation[this.x-1][this.y])             
       };
 
       //Here we convert true or false statements to "binary", 1,10,100,1000
