@@ -28,10 +28,8 @@ function preload() {
     };
   }
   //MAKE THIS MORE LOGICAL
-  for(var i = 3; i<=18; i+=3){
-    var bin = "";
-    bin = i;
-    img[bin] = { 
+  for(var i = 1; i<=100000; i*=10){
+    img[i.toString() + "EL"] = { 
       el: loadImage("pic/elevation/EL_" + i + ".png")
     };
   }
@@ -68,12 +66,24 @@ function updateTiles(){
       else if(tiles[i][j].type===2)
         image(img[sum.toString()].water,j*16,i*16);
 
+        
+      var sum2 = tiles[i][j].wall + tiles[i][j].lCorner + tiles[i][j].rCorner + tiles[i][j].lEdge + tiles[i][j].rEdge + tiles[i][j].end;
+      sum2 = sum2.toString();
+      for(var a = sum2.length-1; a > 0; a--){
+        var bin = parseInt(sum2[a])
+        bin =  bin * Math.pow(10,a);
+        bin = bin.toString() + "EL";;
+        if(sum2[a] !== "0"){
+          image(img[bin].el,j*16,i*16);
+        }
+      }
+
       /**
        * Not to self:
        * I elevation så kan ikke en blokk være
        * i mer enn én "tilstand". Fiks det
        */
-      if(tiles[i][j].wall)
+      /*if(tiles[i][j].wall)
         image(img["3"].el,j*16,i*16);
 
       if(tiles[i][j].lCorner)
@@ -90,7 +100,7 @@ function updateTiles(){
         
       }
       else if(tiles[i][j].end)
-        image(img["18"].el,j*16,i*16);
+        image(img["18"].el,j*16,i*16);*/
       
     }
   }

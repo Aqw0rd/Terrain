@@ -42,7 +42,7 @@ function Terrain(chunk){
           rCorner:    this.y !== this.chunk-1         &&  (this.elevation[this.x][this.y] > this.elevation[this.x][this.y+1]) && this.terrain[this.x][this.y].wall,
           lEdge:      this.y !== 0                    &&  (this.elevation[this.x][this.y] > this.elevation[this.x][this.y-1]) && !(this.terrain[this.x][this.y].wall),
           rEdge:      this.y !== this.chunk-1         &&  (this.elevation[this.x][this.y] > this.elevation[this.x][this.y+1]) && !(this.terrain[this.x][this.y].wall),
-          end:        this.x !== 0                    &&  (this.elevation[this.x][this.y] > this.elevation[this.x-1][this.y])                
+          end:        this.x !== 0                    &&  (this.elevation[this.x][this.y] > this.elevation[this.x-1][this.y]) && !(this.terrain[this.x][this.y].wall)              
       };
 
       //Here we convert true or false statements to "binary", 1,10,100,1000
@@ -57,6 +57,25 @@ function Terrain(chunk){
 
       if(this.terrain[this.x][this.y].right) this.terrain[this.x][this.y].right = 1000;
       else this.terrain[this.x][this.y].right = 0;
+
+      //The same, for elevation
+      if(this.terrain[this.x][this.y].wall) this.terrain[this.x][this.y].wall = 100000;
+      else this.terrain[this.x][this.y].wall= 0;
+
+      if(this.terrain[this.x][this.y].lCorner) this.terrain[this.x][this.y].lCorner = 10000;
+      else this.terrain[this.x][this.y].lCorner = 0;
+
+      if(this.terrain[this.x][this.y].rCorner) this.terrain[this.x][this.y].rCorner = 1000;
+      else this.terrain[this.x][this.y].rCorner = 0;
+
+      if(this.terrain[this.x][this.y].lEdge) this.terrain[this.x][this.y].lEdge = 100;
+      else this.terrain[this.x][this.y].lEdge = 0;
+
+      if(this.terrain[this.x][this.y].rEdge) this.terrain[this.x][this.y].rEdge = 10;
+      else this.terrain[this.x][this.y].rEdge = 0;
+
+      if(this.terrain[this.x][this.y].end) this.terrain[this.x][this.y].end = 1;
+      else this.terrain[this.x][this.y].end = 0;
     }
   }
   //saveStrings(this.elevation,"elevation.txt");
