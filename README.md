@@ -5,11 +5,11 @@ Javascript terrain generation
 
 >* Graphical: 
 >  * Ground & water tilesets:
->    * Grass
->    * Dirt
->    * Water
->    * Elevation
->    * Sand
+>     * Grass
+>     * Dirt
+>     * Water
+>     * Elevation
+>     * Sand
 >  * Transition tiles (E.g Transition from grass to dirt) 
 >  * Point of interest (Villages, dungeons etc.)
 >  * For villages, make the artifacts to work separatly. (Houses in a village is an artifact)
