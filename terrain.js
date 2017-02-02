@@ -19,12 +19,12 @@ function Terrain(chunk){
     this.xoff=0;
     for(this.j = 0; this.j < this.chunk; this.j++){
       this.terrain[this.i][this.j]  = Math.floor(map(noise(this.xoff,this.yoff),0,1,0,3));
-      this.elevation[this.i][this.j]  = Math.floor(map(noise(this.xoff-0.02,this.yoff-0.02),0,1,0,5));
+      this.elevation[this.i][this.j]  = Math.floor(map(noise(this.xoff,this.yoff-0.02),0,1,0,5));
       this.xoff += 0.05;
     }
     this.yoff +=0.05;
   }
-  
+
   //Creating an array of objects
   for(this.x = 0; this.x < this.chunk; this.x++){
     for(this.y = 0; this.y < this.chunk; this.y++){
@@ -32,11 +32,17 @@ function Terrain(chunk){
       //The properties will be true/false except type and elevation
       this.terrain[this.x][this.y] = {
           type:       this.terrain[this.x][this.y],
-          up :        this.x !== 0                    &&  (this.terrain[this.x][this.y] === this.terrain[this.x-1][this.y].type),
-          down:       this.x !== this.chunk-1         &&  (this.terrain[this.x][this.y] === this.terrain[this.x+1][this.y]),
-          left:       this.y !== 0                    &&  (this.terrain[this.x][this.y] === this.terrain[this.x][this.y-1].type),
-          right:      this.y !== this.chunk-1         &&  (this.terrain[this.x][this.y] === this.terrain[this.x][this.y+1]),
-          elevation:  this.elevation[this.x][this.y]
+          up :        this.x === 0                    ||  (this.terrain[this.x][this.y] === this.terrain[this.x-1][this.y].type),
+          down:       this.x === this.chunk-1         ||  (this.terrain[this.x][this.y] === this.terrain[this.x+1][this.y]),
+          left:       this.y === 0                    ||  (this.terrain[this.x][this.y] === this.terrain[this.x][this.y-1].type),
+          right:      this.y === this.chunk-1         ||  (this.terrain[this.x][this.y] === this.terrain[this.x][this.y+1]),
+          elevation:  this.elevation[this.x][this.y],
+          wall:       this.x !== this.chunk-1         &&  (this.elevation[this.x][this.y] > this.elevation[this.x+1][this.y]),
+          lCorner:    this.y !== 0                    &&  (this.elevation[this.x][this.y] > this.elevation[this.x][this.y-1]) && this.terrain[this.x][this.y].wall,
+          rCorner:    this.y !== this.chunk-1         &&  (this.elevation[this.x][this.y] > this.elevation[this.x][this.y+1]) && this.terrain[this.x][this.y].wall,
+          lEdge:      this.y !== 0                    &&  (this.elevation[this.x][this.y] > this.elevation[this.x][this.y-1]) && !(this.terrain[this.x][this.y].wall),
+          rEdge:      this.y !== this.chunk-1         &&  (this.elevation[this.x][this.y] > this.elevation[this.x][this.y+1]) && !(this.terrain[this.x][this.y].wall),
+          end:        this.x !== 0                    &&  (this.elevation[this.x][this.y] > this.elevation[this.x-1][this.y])                
       };
 
       //Here we convert true or false statements to "binary", 1,10,100,1000
@@ -53,6 +59,6 @@ function Terrain(chunk){
       else this.terrain[this.x][this.y].right = 0;
     }
   }
-
+  //saveStrings(this.elevation,"elevation.txt");
   return this.terrain;
 }

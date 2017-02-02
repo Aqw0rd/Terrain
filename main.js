@@ -27,7 +27,15 @@ function preload() {
       water: loadImage("pic/water/2_" + bin + ".png")
     };
   }
-  
+  //MAKE THIS MORE LOGICAL
+  for(var i = 3; i<=18; i+=3){
+    var bin = "";
+    bin = i;
+    img[bin] = { 
+      el: loadImage("pic/elevation/EL_" + i + ".png")
+    };
+  }
+  print(img);
 }
 
 function setup() {
@@ -50,7 +58,7 @@ function updateTiles(){
   for(var i in tiles){
     for(var j in tiles){
       var sum = tiles[i][j].up + tiles[i][j].down + tiles[i][j].left + tiles[i][j].right;
-      
+
       if(tiles[i][j].type===1)
         image(grass,j*16,i*16);
         
@@ -59,6 +67,30 @@ function updateTiles(){
 
       else if(tiles[i][j].type===2)
         image(img[sum.toString()].water,j*16,i*16);
+
+      /**
+       * Not to self:
+       * I elevation så kan ikke en blokk være
+       * i mer enn én "tilstand". Fiks det
+       */
+      if(tiles[i][j].wall)
+        image(img["3"].el,j*16,i*16);
+
+      if(tiles[i][j].lCorner)
+        image(img["6"].el,(j-1)*16,i*16);
+
+      if(tiles[i][j].rCorner)
+        image(img["12"].el,(j+1)*16,i*16);
+        
+      else if(tiles[i][j].lEdge)
+        image(img["9"].el,(j-1)*16,i*16);
+
+      else if(tiles[i][j].rEdge){
+        image(img["15"].el,(j+1)*16,i*16);
+        
+      }
+      else if(tiles[i][j].end)
+        image(img["18"].el,j*16,i*16);
       
     }
   }
