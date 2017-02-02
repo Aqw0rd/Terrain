@@ -1,21 +1,57 @@
 function Terrain(chunk){
   this.chunk = chunk;
   this.terrain = [];
-  this.string = "";
+  this.elevation = [];
   this.yoff = 0;
 
-  for(this.a = 0; this.a< this.chunk; this.a++)
+  //Creating a 2D array
+  for(this.a = 0; this.a< this.chunk; this.a++){
     this.terrain[this.a] = [];
-
+    this.elevation[this.a] = [];
+  }
+    
+  /**
+   * Using Perlin noise to generate random numbers
+   * from 0-1, then mapping that value between 0-3 or 0-5
+   * and finally rounding it to an integer
+   */
   for(this.i = 0; this.i < this.chunk; this.i++){
     this.xoff=0;
     for(this.j = 0; this.j < this.chunk; this.j++){
-      this.string += Math.floor(map(noise(this.xoff,this.yoff),0,1,0,3)) + ",";
+      this.terrain[this.i][this.j]  = Math.floor(map(noise(this.xoff,this.yoff),0,1,0,3));
+      this.elevation[this.i][this.j]  = Math.floor(map(noise(this.xoff-0.02,this.yoff-0.02),0,1,0,5));
       this.xoff += 0.05;
     }
-    this.terrain[this.i] = this.string;
-    this.string = "";
     this.yoff +=0.05;
+  }
+  
+  //Creating an array of objects
+  for(this.x = 0; this.x < this.chunk; this.x++){
+    for(this.y = 0; this.y < this.chunk; this.y++){
+
+      //The properties will be true/false except type and elevation
+      this.terrain[this.x][this.y] = {
+          type:       this.terrain[this.x][this.y],
+          up :        this.x !== 0                    &&  (this.terrain[this.x][this.y] === this.terrain[this.x-1][this.y].type),
+          down:       this.x !== this.chunk-1         &&  (this.terrain[this.x][this.y] === this.terrain[this.x+1][this.y]),
+          left:       this.y !== 0                    &&  (this.terrain[this.x][this.y] === this.terrain[this.x][this.y-1].type),
+          right:      this.y !== this.chunk-1         &&  (this.terrain[this.x][this.y] === this.terrain[this.x][this.y+1]),
+          elevation:  this.elevation[this.x][this.y]
+      };
+
+      //Here we convert true or false statements to "binary", 1,10,100,1000
+      if(this.terrain[this.x][this.y].up) this.terrain[this.x][this.y].up = 1;
+      else this.terrain[this.x][this.y].up = 0;
+
+      if(this.terrain[this.x][this.y].down) this.terrain[this.x][this.y].down = 10;
+      else this.terrain[this.x][this.y].down = 0;
+
+      if(this.terrain[this.x][this.y].left) this.terrain[this.x][this.y].left = 100;
+      else this.terrain[this.x][this.y].left = 0;
+
+      if(this.terrain[this.x][this.y].right) this.terrain[this.x][this.y].right = 1000;
+      else this.terrain[this.x][this.y].right = 0;
+    }
   }
 
   return this.terrain;
