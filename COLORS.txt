@@ -1,0 +1,32 @@
+COLOR RGB + HEX
+
+GRASS:
+(39, 174, 96)	ff27ae60	//Foundation
+(56, 200, 103)	ff38c867 	//Detail
+(113, 215, 122)	ff71d77a	//DetailCenter LIGHT
+(32, 152, 94)	ff20985e	//DetailCenter DARK
+
+DIRT:
+(131, 105, 83)	ff836953	//Foundation
+(159, 121, 85)	ff9f7955 	//Detail
+(180, 137, 91)	ffb4895b	//DetailCenter LIGHT
+(119, 93, 72)	ff775d48	//DetailCenter DARK
+
+WATER:
+(41, 128, 185)	ff2980b9	//Foundation
+(59, 147, 195)	ff3b93c3	//Detail
+(86, 160, 193)	ff56a0c1	//DetailCenter LIGHT
+(33, 112, 170)	ff2170aa	//DetailCenter DARK
+
+TEMPLATE:
+(255, 0, 0)	ffff0000	//Foundation
+(0, 255, 0)	ff00ff00	//Detail
+(0, 0, 255)	ff0000ff	//DetailCenter LIGHT
+(0, 0, 0)	ff2170aa	//DetailCenter DARK
+
+TRANSITION:
+(255, 255, 255)	ffffffff	//Foundation
+(255, 255, 0)	ffffff00	//Detail
+(255, 0, 255)	ffff00ff	//DetailCenter LIGHT
+(0, 255, 255)	ff00ffff	//DetailCenter DARK
+	
