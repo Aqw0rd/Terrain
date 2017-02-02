@@ -5,7 +5,7 @@ Javascript terrain generation
 
 >* Graphical: 
 >  * Ground & water tilesets:
->    * Grass
+>   * Grass
 >    * Dirt
 >    * Water
 >    * Elevation
